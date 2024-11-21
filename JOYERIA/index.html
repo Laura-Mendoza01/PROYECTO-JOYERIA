@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>plantilla pagina web html</title>
+  <link rel="stylesheet" type="text/css" href="estilo.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+ -->
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#"></a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="index.html">Inicio</a></li>
+        <li><a href="about.html">Sobre mí</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container">
+    <h1><strong>CRUD</strong></h1>
+  <!--renglon 1, columna 1 -->
+    <div class="row">
+      <div class="col-md-6">
+        <h3>Competencia específica.</h3>
+        <p></p>
+        <menu>
+          <li>Aplica un lenguaje de programación del lado del servidor para el desarrollo de una aplicación.
+          <li>Aplica un patrón de diseño arquitectónico de software por capas para el desarrollo de un CRUD.
+        </menu>
+        <h3>Descripción.</h3>
+        <p class="gap_below"> Implementa un patron de dieño arquitectónico de software por capas, para el
+          desarrollo de una herramienta que muestre la implementación de operaciones de: <br>
+        <ol>
+          <li><strong>Crear</strong> un registro con atributos y los escribe a una base de datos relacionales.
+          <li><strong>Leer</strong> un registro y renderiza sus atributos en una página electrónica.
+          <li><strong>Actuizar</strong> los atributos de un registro.
+          <li><strong>Eliminar</strong> un registro de una base de datos.
+        </ol>
+        </p>
+      </div>
+  <!--renglon 1, columna 2 -->
+      <div class="col-md-6 relleno">
+        <h3>Instalación.</h3>
+        <ol>
+          <li>Descargar el contenido del repositirio: <a href="" >PROYECTO-JOYERIA</a >Renombrar el archivo.(JOYERIA)</li>  
+          <li>Descomprimir e instalar el proyecto en la carpeta <strong>htdocs</strong>. </li>  
+          <li>Ejecutar como administrador la aplicación <strong>xampp-control.exe</strong>, inicializar los servicios de Apache y MySQL.</li>  
+          <li>Desde el sistema de gestion de base de datos <i>phpMyAdmin</i>. Crear una base de datos con el nombre <u><i>escuela</i></u> e importar el archivo  <u><i>secundarias.sql</i></u></li>  
+          <li>Escribir la petición <strong>ESCUELA/</strong> en la barra del navegador <i>apache</i>.  
+          <li>Seleccionar <u>Dar de alta una secundaria</u>. Rellear todos los campos. Seleccionar el control Enviar.</li>
+          <li>Seleccionar <u>Modificar</u>. Reescribir uno, varios campos. Seleccionar el control Enviar.</li> 
+          <li>Seleccionar <u>Borrar</u> Vefificar la actualidad de los registros de la tabla</li>
+          <li>Escribir una petición, <strong>CRUD_LeeMe/secundaria/info</strong> en la barra de direcciones del navegador.</li>
+        </ol>
+      </div>
+    </div>
+<!--renglon 2, columna 1 -->
+    <div class="row">
+      <div class="col-md-6 relleno2">
+        <h2 class="texto1">Información.</h2>
+        <h5>El árbol de dependencia muestra la implementación desarrollada. Una petición URL es 
+          gestionada por el archivo <i>.htacces</i>, que es un archivo de texto que se utiliza para 
+          configurar el comportamiento del servdor Apache.  El archivo .htacces puede:
+           <ol type="i">
+            <li>Redirigir una petición URL tipo genérica, hacia la carpeta /public. </li>
+            <li>Evitar indexar los contenidos del proyecto</li>
+           </ol>
+          La estructura de archivos contiene dos carpetas.
+          <ol type=a>
+            <li><b>/app</b> Contine colecciones de carpetas de soporte para el desarollo de la aplicación. 
+              Sus contenidos son sólo accesibles para el desarroll@r. 
+            <li><b>/public</b> Contiene colecciones de carpetas con los recursos informáticos disponibles
+              para las peiciones del usuario. 
+          </ol>  
+        </h5> 
+        <center>
+          <a href="/txt/LeeMe.txt" download="LeeMe.txt">Descargar LeeMe.txt</a>
+        </center>
+        
+      </div>
+
+<!--renglon 2, columna 2 -->
+      <div class="col-md-6">
+        <h3>Agregando contenido</h3>
+        <p class="indent gap_below">
+          <p> 
+            <img class="img_1" src="img/Captura.png" width="400" height="200">
+          </p>
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

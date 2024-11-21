@@ -1,0 +1,396 @@
+# Operaciones de lectura/escritura de registros en un sistema de gestión de información. 
+
+## Crud.		 
+
+Es una heramienta para la implementación de 4 operaciones __Create,Read,UpDate,Delete__ ejecutadas por una tecnología de lenguaje, sobre una base de datos y por un sistema de gestion de información, cohabita con una organización de arquitectura por capas: __Modelo,Vista,Controlador__ ambos son interpretadados por un servidor Html. 
+
+# Contenido.
+___ 
+
+1. Descripción. 
+2. Actualización. 
+3. Ejecución. 
+4. Glosario. 
+5. Referencias.   
+___
+
+### Antecedente.  
+
+leeMe.txt CapasRecordSet.			 
+Muestra cómo organizar una aplicación web en capas; muestra como las colecciones de los 
+script .htcacces -raiz,public/app es interpretado por el servidor Apache desarrolla: 
+ i) direccionamiento de la petición del cliente en una URL. 
+ ii) Prohíbe mostrar el índex de proyectos en la carpeta raíz.
+
+# Descripción. 
+
+Se presenta una aplicación web entre un __cliente-servidor Http__, para ejecutar un script desarrollado en un lenguaje de programación de código abierto, para el desarrollo de una interfaz gráfica que permite ejecutar operaciones: _leer_, _crear_, _actualizar_ y _eliminar_ sobre un conjunto de registros, _recordSet_, contenido en una base de datos.
+
+Se muestra como un archivo de acceso de hipertexto <*.htacces*> configura la navegación del servidor Http en la capa pública de archivos, así también prohíbe la renderización de los contenidos del __índice del proyecto.__
+
+## Petición URL. Diálogo entre cliente-servidor.
+
+El dialogo entre cliente-servidor html comienza con una URL-petición genérica, *url-raíz*, desde la barra de navegación de un navegador web. Url-raíz, es atendida por el servidor local.  Éste muestra la renderización de la interfaz gráfica *dashBoard* con hipervinculos, *etiquetas referenciadas*,  ver Figura 1.
+
+Para para ejecutar operaciones de:
+
+1. Crear <*Dar de alta un libro*>, introduce un nuevo registro y sus atributos a una base de datos estructurada.
+
+2. Actualizar <*Modificar*>, lee, re-escribe y almacena los atributos de un registro.
+
+3. Delete <*Borrar*>, lee y elimina un registro.   
+
+![crudBareBones](/img/crudBareBones.PNG)
+
+Figura 1. CRUD versión _bare bones_.
+
+## Tipos de peticiones.
+
+### Petición raíz. 
+
+Una URL (del inglés Uniform Resource Locator,  localizador de recursos uniforme) es una cadena de texto estándart que identifica la ubicación de un recurso en la web.
+La función del localizador de recursos, (petición-raíz) tiene por lo menos tres elementos dentro de una estructura tipo _identificador_ de fácil memorización y proporciona informacción a los motores de búsqueda  de contenidos de un sitio web.
+
+La petición-raíz está conformada por los elementos-URL: 
+
+			http://localhost/Crud/
+			├───── raiz-url ────┤
+
+Donde:
+
+			┬		http://    <- define tipo de protocolo de la petición 
+	    raiz-url	localhost/ <- define la IPv4 del servidor Html.  
+			┴		Crud/      <- define la carpeta lógica contenedora del proyecto.
+
+*localhost* es el sobre nombre de dominio referido a la dirección reservada IPv4  127.0.0.1 [Localhost].
+
+![crudBareBones](/img/urlRaiz.png)
+
+Figura 2. Url-raíz.
+
+### Petición especializada.
+
+El dialogo entre cliente-servidor para proporcionar acceso a un recurso electrónico comienza con una URL-petición, del lado del cliente.  
+
+La petición especializada está conformada por los elementos-URL: 
+
+			http://localhost/Crud/libros/borrar/8 
+			├───── raiz-url ────┤├─ payLoad-url ─┤
+
+Donde: 
+			┬		http://    <- define tipo de protocolo de la petición 
+	    raiz-url	localhost/ <- define la IPv4 del servidor.  
+			┴		Crud/      <- define la carpeta lógica contenedora del proyecto. 
+
+			┬		libros/	   <- define controlador principal que contiene métodos. 
+	  payLoad-url 	borrar/    <- define método la funcionalidad del controlador.  
+			┴		8		   <- define argumento para el método.	 
+
+
+La petición especializada apunta a un único recurso está compuesta de partes listados en [What_is_a_URL] y descritos en [getURL]. 
+
+
+![crudBareBones](/img/seleccionRegistro_8.PNG)
+
+Figura 3. Url-especializada.
+
+### Organización de carpetas de la aplicación web. 
+
+Xampp es una herramienta de desarrollo para crear, depurar y presentar aplicaciones web localmente. 
+Se recomienda seguir el proceso de instalación del entorno de desarrollo como se describe en:
+[instalación de xampp] y en [pasos instalación xampp].
+
+Instalado el entorno de desarrollo xampp, navegar hasta el repositorio de proyectos _htdocs_.  
+En esta carpeta el navegador accede a los proyectos del desarrollador, además de que contiene al _dashBoard_ representativo del entorno. 
+
+Se tiene que copiar y pegar la carpeta del proyecto y ,o crearla en _htdocs_.  
+En el en el entorno de desarrollo [xampp], el servidor Htlm Apache tiene a la carpeta contenedora de la aplicación web con la siguiente se organización:  
+
+```bash 
+xampp				     <- entorno Xampp. 
+  └─htdocs			     <- repositorio de proyectos http del servidor Apache.
+	  └─ Crud		     <- carpeta contenedora de la aplicación web. 
+ 	      ├─ .htaccess   <- enruta cualquier petición URL el cliente. 
+  	      ├─ app		 <- arcivos de la aplicación para uso del desarrollad@r.	 
+   	      └─ public      <- archivos públicos de la aplicación. 
+															Árbol de dependencia.
+``` 
+</br>
+
+### Desgloce de carpetas. 
+Se tienen dos tipos de carpetas. 
+
+	i) Carpetas de archivos públicos para la aplicación. 
+
+```bash 
+Crud			    <- carpeta contenedora de la aplicación web. 
+  └─ public		    <- carpeta con archivos públicos de la aplicación. 
+  		├─ css		    <- archivos de scripts de hoja de estilos. 
+  		├─ img  	    <- almacena fotografías y archivos multimedios. 
+  		├─ js		    <- archivos de scripts en JavaScrips. 
+  		├─ .htaccess    <- enruta petición hacia cualquier index.php. 
+  		└─ index.php    <- atiende y muestra la petición principal -dashboard-. 
+``` 
+</br> 
+	ii) Carpetas de archivos para desarrollo de la aplicación. 
+
+```bash 
+Crud		 			<- carpeta contenedora de la aplicación web. 
+  └──app				<- archivos de la aplicación para uso del desarrollad@r. 
+	  ├─ controladores	<- retorna interfaz de gestión de una bd 
+	  ├─ libs  	 		<- carga en memoria clases 
+	  ├─ modelos	 	<- atiende operaciones de lectura-escritura. 
+	  ├─ vistas	 		<- renderiza vista principal 
+	  ├─ .htaccess 		<- prohibe navegación en index de proyectos. 
+	  └─ inicio.php 	<- direcciona hacia el controlador principal. 
+``` 
+</br> 
+
+Se tiene que el archivo <app/libs/Control.php> contiene a la clase Control, que se define como el controlador principal, de forma que: 		 
+
+Del lado del soporte de la aplicación se tiene que: 
+
+```bash		 
+Crud		 			    ← carpeta contenedora de la aplicación web. 
+  └──app					← archivos de la aplicación para uso del desarrollad@r. 
+	  ├─ inicio.php	        ← direcciona hacia el controlador principal.  
+      ├─ libs 
+      │	   ├─ MySQLdb.php            ← clase para gestionar tareas con base de datos
+	  │	   │	├─ __construct()     ← retorna un objeto interfaz 
+	  │	   │	└─ querySelect($sql) ← retorna un arreglo asociativo tipo recordSet 
+	  │	   ├─ Control.php 
+	  │	   │   ├─ __construct() 	 ← constructor, desgloza URL y obtiene la componente del controlador 
+	  │	   │   └─ separarURL() 		 ← retorna un arreglo con los elementos encontrados en la URL 
+	  │	   └─ Controlador.php 		 ← Clase tipo: fabrica de métodos
+      ├─ controladores 
+	  │		   └─ Libros.php		 ← colección de métodos para gestionar una base de datos  
+	  ├─ modelos 
+	  │      └─ LibrosModelo.php 	 ← retorna interfaz de gestión de recorSet de la base de datos 
+	  ├─ vistas 
+	  │     └─ LibrosVista.php   	 ← renderiza UI con los recorSet de la base de datos
+	  └─ .htaccess              	 ← prohíbe la indexación de archivos
+``` 
+</br> 
+
+***
+
+# Actualización. 
+
+## Redireccionamiento de la url ejecutado por el servidor Apache. 
+
+Cualquier petición del cliente bajo la estructura de una URL, debe ser direccionada y atendida hacia: **/public/index.php.**. El responsable del redireccionamiento hacia index.php es el script contenido en **<.htaccess>**, esta serie de instrucciones y pares de directivas-argumentos son ejecutados por el módulo ``mod_rewrite.c``, quien ejecuta manipulaciones de re-escritura de la URL; escritas en expresiones regulares [regExp] son un [vocabulario] interpretadas por el servidor Apache. La siguiente estructura de archivos muestra la residencia y la decripción del archivo _.htacces_ dentro de la carpeta contenedora de de archivos públicos para la aplicación. 
+
+El archivo .htaccess, es un archivo oculto que se utiliza en el lado del servidor Apache para: 
+1. Configurar funciones de direccionamiento y búsqueda de archivos para una aplicación web. 
+2. No permitir el acceso al índice de proyecto. 
+3. Habilitar-deshabilitar la renderización de mensajes del estado de ejecución de la aplicación web. 
+
+```bash				 
+Crud		 			    ← carpeta contenedora de la aplicación web. 
+  ├─ public 
+  │ 	└─ .htaccess 								   ← enruta petición hacia cualquier index.php 
+  │		     └─ <IfModule mod_rewrite.c> 
+  │			     Options -Multiviews 
+  │			     RewriteEngine On 					   ← administra los permisos de ejecución.
+  │			     RewriteBase /Crud/public              ← ruta de búsqueda del index.php 
+  │			     RewriteCond %{REQUEST_FILENAME} !-d 
+  │			     RewriteCond %{REQUEST_FILENAME} !-f 
+  │			     RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]  ← ejecución de index.php
+  │			     </IfModule> 
+  │ 
+  └─ index.php <- direcciona hacia el controlador principal. 
+		└─ require_once("../app/inicio.php");//cargar en memoria clases entorno de la aplicación. 
+					   $control = new Control(); 
+``` 
+</br>
+
+El **index.php** tiene la responsabilidad de cargar en memoria de trabajo, código del controlador principal de la aplicación **inicio.php**, así como, de generar una instancia de la clase Control().
+
+Se tiene que _*ACTUALIZAR*_ la ruta de acceso al index.php, línea ``RewriteBase /Crud/public``. 
+Según el foro ``es.stackoverflow.com``, el contenido del archivo **.htaccess** en la carpeta _/public_ describe las directivas [rewriterule], en tres secciones:
+
+* [rewriteengine] 
+```
+# Esto habilita los permisos de ejecución del módulo mod_rewrite 
+# para poder reescribir o redireccionar URLs.
+RewriteEngine On
+```
+
+* [rewriteCond] 
+```
+# Si las siguientes condiciones son verdaderas, entonces redireccionamos la URL:
+# Si el nombre de fichero solicitado no es un directorio,
+RewriteCond %{REQUEST_FILENAME} !-d
+# Y además, si el nombre de fichero solicitado no es un archivo que 
+# ya exista (podría existir a nivel de servidor lo que estés buscando por la URL)
+RewriteCond %{REQUEST_FILENAME} !-f
+```
+
+ * [rewriterule]
+```
+# luego reescribe la URL de la siguiente manera:
+# Tome el nombre completo del archivo de solicitud y proporciónelo como el valor de un
+# parámetro de consulta "url" para index.php. Agregue cualquier cadena de consulta de
+# la URL original como parámetros de consulta adicionales (QSA) y detener
+# procesando este archivo .htaccess (L). 
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+``` 
+ 
+***
+
+# Ejecución. 
+
+Para probar localmente la aplicación web, desarrollada se tiene que ejecutar la aplicación **xampp-control.exe** con permiso de administrador, como se muestra en la Figura 4. 
+
+![crudBareBones](/img/ejecucionPanelControlXampp.PNG)
+
+Figura 4. Ejecución del panel de control.
+
+La Figura 5. muestra la ejecución del los servicios:
+
+1. Apache ← servidor web para sitios Html. 
+2. MySQL. ← sistema gestor de base de datos.
+
+![crudBareBones](/img/panelControlXampp.PNG)
+
+Figura 5. Ejecución de los servicios. 
+
+Ejecutar en la barra de direcciones del navegador local:  http://localhost/Crud/  
+
+Navegar con los hiperenlaces dentro del dashboard de la aplicación: 
+*	Modificar  				<- modifica un registro-atributo.  
+
+![crudBareBones](/img/modificar.PNG)
+
+Figura 6. 
+
+*	Borrar     				<- borra un registro-atributo. 
+
+![crudBareBones](/img/dashBoadBorrar.PNG)
+
+Figura 7.
+
+*	Dar de alta un libro    <- actualiza un registro-atributo. 
+		 
+![crudBareBones](/img/dashBoadDarAltaRegistro.png)
+
+Figura 8.
+
+***
+
+# Glosario. 
+
+**.htaccess** 
+
+Los archivos ocultos .htaccess (o "ficheros/archivos de configuración distribuida") facilitan una forma de realizar cambios en la configuración en contexto directorio.  Un fichero, que contiene una o más directivas, se coloca en un documento específico de un directorio, y estas directivas aplican a ese directorio y todos sus subdirectorios. 
+
+**MySQL**
+
+ Es un sistema de gestión de bases de datos relacionales. MySQL permite definir, almacenar, organizar, consultar y recuerar datos contenidos en una base de datos relacionales. 
+
+ **Xampp**
+
+Es una herramienta de desarrollo para crear, depurar y presentar aplicaciones web localmente. Tiene componentes de código abierto para: 
+* _Apache_ servidor para ejecutar sitios con Html, 
+* _MariaDB/MySQL_ es un sistema de gestión de datos relacionales (RDBMS)la base de datos,
+* _PHP_  es un lenguaje de programación de scripta para desarrollo web,
+* _Perl_ es un lenguaje de programación de scripts multiplataforma e interpretado.
+ 
+**URL**
+
+Es un acrónimo (del inglés Uniform Resource Locator,Localizador Uniforme de Recursos)  es una cadena de texto que identifica la ubicación de un recurso en la web. Es una dirección para identificar y acceder a un recurso digital.
+
+**Modelo-Vista-Controlador (MVC)**
+
+ En un patrón de arquitectura de software para implementar: 
+ i) la lógica de control. Es la capa que contiene la lógica que relaciona los datos del usuario contenidos en campos con la capa de interfaz de usuario. Es un intermediario entre la capa del Modelo y la capa de la Vista. Es el responsable de desglozar y enrutar las solicitudes del usuario. 
+ ii)la gestión con la base de datos en medios persistentes, almacenamiento no volátil. Es la capa que gestiona la interacción de solicitudes de datos almacenados estructuralmente en un registro con atributos.
+ iii) interfaces de ususario. Es la capa encargada de la presentación de los datos y de la interacción del ususario. Es la capa que define cómo se deben mostrar los datos de la aplicación. Aprenda más [MVC].
+
+**QSA**
+Es una bandera de señalización de encuesta; el indicador QSA significa agregar una cadena de consulta existente después de que se haya reescrito el URI.
+(The QSA flag means to append an existing Query String After the URI has been rewritten.)
+https://stackoverflow.com/questions/16468098/what-is-l-in-qsa-l-in-htaccess
+
+***
+# Referencias. 
+ 
+Arce-Anguiano Francisco Javier.
+Introducción a la programación orientada a objetos con PHP:  
+La programación orientada a objetos te permitirá hacer proyectos con PHP. 
+Formato: Edición Kindle. ASIN : ‎ B07Z6KKLX1					 
+
+Crear un patrón MVC con PHP y MySQL. 
+Arce-Anguiano Francisco Javier. 
+Disponible en: https://www.udemy.com/course/crear-un-patron-mvc-con-php-y-mysql/learn/lecture/12655444#overview 
+Consultado: 15sept24. 
+ 
+Muñoz-Vela Sergio David. 
+PHP MVC y Estructura en Carpetas (Proyecto MVC PHP) 
+Disponible en: https://github.com/velamds/PHP_MVC_Youtube?tab=readme-ov-file. 
+Disponible en: https://www.youtube.com/@ElProfeSergio/videos 
+Consultado: 15sept24. 
+
+B. Gustavo. 
+Qué es el archivo .htaccess: Guía completa. 
+Disponible en: https://www.hostinger.mx/tutoriales/que-es-el-archivo-htaccess 
+Consultado: 15sept24. 
+
+[localhost]: https://www.cloudcenterandalucia.es/blog/localhost-que-es-conceptos-basicos-y-como-crearlo/
+Trevenque Cloud 2024. Localhost: qué es, conceptos básicos y cómo crearlo.
+Consultado: 13oct24.
+
+[What_is_a_URL]: https://developer.mozilla.org/es/docs/Learn/Common_questions/Web_mechanics/What_is_a_URL
+Mozilla Foundation. ¿Qué es una URL?.
+Consultado: 13oct24.
+  
+[getURL]: https://github.com/miRepositorioGit/getURL
+getURL-htaccess. Martín Cordero. miRepositorioGit.
+Consultado: 13oct24.
+
+[xampp]: https://www.apachefriends.org/es/index.html
+¿Qué es XAMPP? XAMPP es el entorno más popular de desarrollo con PHP.
+Consultado: 13oct24.
+
+[instalación de xampp]:https://www.nettix.com.pe/blog/web-blog/que-es-xampp-y-como-puedo-usarlo
+INSTALACIÓN DE XAMPP.
+Consultado: 13oct24. 
+
+[pasos instalación xampp]: https://www.ionos.mx/digitalguide/servidores/herramientas/instala-tu-servidor-local-xampp-en-unos-pocos-pasos/
+Consultado: 13oct24.
+
+[MVC]: https://developer.mozilla.org/es/docs/Glossary/MVC
+MVC.
+Glosario de MDN WEB Docs.
+Consultado: 13oct24.
+
+[regExp]: https://perldoc.perl.org/perlre
+perlre (source, CPAN)
+Expresiones regulares. 
+Consultado: 13oct24.
+
+[vocabulario]: https://httpd.apache.org/docs/2.4/rewrite/intro.html
+Vocabulario de expresiones regulares.
+Consultado: 13oct24.
+
+[rewriterule]: https://es.stackoverflow.com/questions/394039/que-significa-rewriterule-path-1-qsa-l-en-mi-htaccess
+Que significa RewriteRule ^(.*)/$ ?path=$1 [QSA,L] en mi .htaccess
+Consultado: 13oct24.
+
+[rewriteengine]: https://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewriteengine
+RewriteEngine Directive.
+Consultado: 13oct24.
+
+[rewriteCond]:
+https://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewritecond
+RewriteCond Directive.
+Consultado: 13oct24.
+
+[rewriterule]:
+https://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewriterule
+RewriteRule Directive.
+Consultado: 13oct24.
+
+mysqli::__construct 
+Disponible en: https://www.php.net/manual/es/mysqli.construct.php 
+Consultado: 15sept24. 

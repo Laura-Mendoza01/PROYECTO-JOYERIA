@@ -1,0 +1,203 @@
+body {
+    background: #f8e1e6;  /* Rosa pastel suave */
+    font-family: 'Montserrat', sans-serif;
+    color: #333;  /* Texto oscuro para buen contraste */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; 
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+    background-color: #fff5f7; /* Fondo suave para todo el contenedor */
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+h1, h2, h3 {
+    font-family: 'Montserrat', sans-serif;
+    color: #ff6b81;  /* Rosa pastel fuerte */
+    text-align: center;
+    letter-spacing: 1px;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out forwards; 
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2.5em;
+    animation-delay: 0.2s;
+}
+
+h2 {
+    font-size: 2em;
+    animation-delay: 0.4s;
+}
+
+h3 {
+    font-size: 1.6em;
+    animation-delay: 0.6s;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estilo de los enlaces */
+a {
+    color: #ff6b81;  /* Rosa suave */
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.3s ease;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #70002d; 
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: #70002d; 
+    background: #fff0f0;
+    padding: 5px 10px; 
+    border-radius: 4px;
+}
+
+a:hover::after {
+    width: 100%; 
+}
+
+/* Cajas de contenido */
+.box {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    background: #ffd2dc;  /* Fondo rosa suave */
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 1s ease-out forwards;
+    border: 2px solid #ffb7cc; /* Borde suave */
+}
+
+/* Caja de instalación */
+.relleno2 {
+    background: #ff9bb6;
+    border-radius: 15%;
+    animation: slideInFromLeft 0.8s ease-out forwards;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Desplazamiento desde la izquierda */
+@keyframes slideInFromLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Estilo de los botones */
+input[type=submit] {
+    background-color: #ff6f91;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 50px; /* Botón redondeado */
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    animation: buttonEntrance 0.8s ease-out forwards;
+    text-transform: uppercase;
+}
+
+input[type=submit]:hover {
+    background-color: #ff3a5f; 
+    transform: scale(1.05);
+}
+
+@keyframes buttonEntrance {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Contenedor general con bordes redondeados */
+.container {
+    border-radius: 20px;
+    background-color: #ffebf0; /* Fondo rosado claro */
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+/* Estilos para imágenes */
+.img_1 {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Espaciado y bordes para elementos de texto */
+.indent {
+    text-indent: 20px;
+}
+
+.gap_below {
+    margin-bottom: 20px;
+}
+
+.responsive {
+    display: inline-block;
+    width: 100%;
+    max-width: 300px;
+    margin: 15px;
+    padding: 20px;
+    background-color: #fff1f3;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: 1.2em;
+    color: #ff6b81;
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 750px) {
+    .responsive {
+        width: 90%;
+    }
+}
+
+@media (min-width: 1000px) {
+    .responsive {
+        width: 45%;
+    }
+}
