@@ -1,4 +1,4 @@
-# CRUD_ESCUELA
+# CRUD_JOYERIA
 Implementación de un patrón de diseño arquitectónico en capas
 
 Este proyecto desarrolla una aplicación web interpretada en un servidor local, utilizando un enfoque por capas y codificada en PHP.
